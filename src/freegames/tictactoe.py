@@ -1,4 +1,7 @@
-from turtle import *
+from turtle import (
+    setup, hideturtle, tracer, update, onscreenclick,
+    penup, goto, down, color, width, circle, ontimer
+)
 
 from freegames import line
 
