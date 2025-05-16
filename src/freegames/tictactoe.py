@@ -1,10 +1,9 @@
-import random
-
 from turtle import *
 
 from freegames import line
 
-# ——— 全局状态 ———
+
+ # ——— 全局状态 ———
 state = {
     'player': 0,                   # 0 = X（人），1 = O（电脑）
     'board': [[None]*3 for _ in range(3)],
