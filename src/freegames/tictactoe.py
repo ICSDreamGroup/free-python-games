@@ -1,11 +1,13 @@
+import random
+
 from turtle import *
 
 from freegames import line
 
 # ——— 全局状态 ———
 state = {
-    'player': 0,  # 0 = X（人），1 = O（电脑）
-    'board': [[None] * 3 for _ in range(3)],
+    'player': 0,                   # 0 = X（人），1 = O（电脑）
+    'board': [[None]*3 for _ in range(3)],
     'game_over': False,
 }
 
@@ -13,10 +15,9 @@ state = {
 def grid():
     """Draw tic-tac-toe grid."""
     line(-67, 200, -67, -200)
-    line(67, 200, 67, -200)
+    line( 67, 200,  67, -200)
     line(-200, -67, 200, -67)
-    line(-200, 67, 200, 67)
-
+    line(-200,  67, 200,  67)
 
 # 画 X
 def drawx(x, y):
@@ -25,7 +26,6 @@ def drawx(x, y):
     width(4)
     line(x, y, x + 133, y + 133)
     line(x, y + 133, x + 133, y)
-
 
 # 画 O
 def drawo(x, y):
@@ -37,11 +37,9 @@ def drawo(x, y):
     width(4)
     circle(62)
 
-
 # 将点击坐标归整到格子左下角
 def floor(value):
     return ((value + 200) // 133) * 133 - 200
-
 
 # 检测胜利
 def check_win():
@@ -62,7 +60,6 @@ def check_win():
         return -1
     return None
 
-
 def evaluate():
     """胜利时得分：电脑 O 赢 +1，人 X 赢 -1，平局或未结束 0"""
     winner = check_win()
@@ -72,13 +69,10 @@ def evaluate():
         return -1
     return 0          # 平局 or 未结束
 
-
 def minimax(is_maximizing):
     """Minimax 递归，返回 (最佳分值, (row, col) 最佳落子)"""
     score = evaluate()
-    if score != 0 or all(
-        all(cell is not None for cell in row) for row in state['board']
-    ):
+    if score != 0 or all(all(cell is not None for cell in row) for row in state['board']):
         # 终止：有人赢或满盘
         return score, None
 
@@ -104,7 +98,6 @@ def minimax(is_maximizing):
                     if val < worst[0]:
                         worst = (val, (r, c))
         return worst
-
 
 # 落子回调
 def tap(x, y):
@@ -136,11 +129,11 @@ def tap(x, y):
         goto(0, 0)
         color('green')
         if result == 0:
-            write('You Win!', align='center', font=('Arial', 24, 'bold'))
+            write("You Win!", align='center', font=('Arial', 24, 'bold'))
         elif result == 1:
-            write('Computer Wins!', align='center', font=('Arial', 24, 'bold'))
+            write("Computer Wins!", align='center', font=('Arial', 24, 'bold'))
         else:
-            write('Draw!', align='center', font=('Arial', 24, 'bold'))
+            write("Draw!", align='center', font=('Arial', 24, 'bold'))
         return
 
     # 切换玩家
@@ -151,11 +144,10 @@ def tap(x, y):
         _, move = minimax(True)       # True 表示电脑层 (maximizing)
         r, c = move
         # 计算该格左下角坐标
-        fx_ai = c * 133 - 200
-        fy_ai = r * 133 - 200
+        fx_ai = c*133 - 200
+        fy_ai = r*133 - 200
         # 延迟一点，看起来更自然
         ontimer(lambda: tap(fx_ai + 1, fy_ai + 1), 200)
-
 
 # 主流程
 setup(420, 420, 370, 0)
