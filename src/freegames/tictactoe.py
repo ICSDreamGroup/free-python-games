@@ -1,4 +1,5 @@
 from turtle import *
+
 from freegames import line
 
 # ——— 全局状态 ———
